@@ -1,3 +1,71 @@
-.title {
-  color: red;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  &__header {
+    flex: 0 0 auto;
+  }
+  &__content {
+    flex: 1 1 auto;
+  }
+  &__footer {
+    flex: 0 0 auto;
+  }
+}
+
+.container {
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.header {
+  min-height: 75px;
+  background-color: #686868;
+}
+
+.footer {
+  min-height: 75px;
+  background-color: #686868;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  margin: 0;
+  border: 1px solid #929292;
+  &__content {
+    position: relative;
+    width: 100%;
+    padding-bottom: 75%;
+  }
+  &__content-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  &__description {
+    padding: 15px;
+    font-size: 20px;
+    text-align: center;
+  }
+}
+
+.gallery {
+  &__title {
+    text-align: center;
+    text-transform: uppercase;
+  }
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    gap: 20px;
+  }
 }

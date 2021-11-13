@@ -26,13 +26,13 @@ module.exports = {
     main: "./index.js",
   },
   output: {
-    filename: filename("js"),
+    filename: filename("js", "scripts"),
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
   devtool: "source-map",
   devServer: {
-    static: path.resolve(__dirname, "dist"),
+    static: path.resolve(__dirname, "dist/assets"),
     hot: true,
     port: 3000,
   },
@@ -56,6 +56,27 @@ module.exports = {
           "css-loader",
           "sass-loader",
         ],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "assets/images/[hash][ext][query]",
+        },
+      },
+      {
+        test: /\.mp3$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "assets/sounds/[hash][ext][query]",
+        },
+      },
+      {
+        test: /\.mp4$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "assets/video/[hash][ext][query]",
+        },
       },
     ],
   },
