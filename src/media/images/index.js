@@ -1,4 +1,4 @@
-import { importAll } from "../../scripts/commonFunctions.js";
+import { importAll } from "../../scripts";
 
 const sources = importAll(
   require.context("./", true, /\.(png|svg|jpg|jpeg|gif)$/i)
