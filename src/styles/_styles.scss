@@ -1,3 +1,6 @@
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -26,6 +29,11 @@
   background-color: #686868;
 }
 
+.content {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
 .footer {
   min-height: 75px;
   background-color: #686868;
@@ -36,7 +44,8 @@
   grid-template-columns: 1fr;
   grid-template-rows: 1fr auto;
   margin: 0;
-  border: 1px solid #929292;
+  border: none;
+  background-color: black;
   &__content {
     position: relative;
     width: 100%;
@@ -51,14 +60,18 @@
     object-fit: cover;
   }
   &__description {
-    padding: 15px;
+    padding: 10px;
     font-size: 20px;
     text-align: center;
+    color: white;
   }
 }
 
 .gallery {
   &__title {
+    margin-bottom: 50px;
+    font-weight: 400;
+    font-size: 28px;
     text-align: center;
     text-transform: uppercase;
   }
@@ -66,6 +79,12 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto;
-    gap: 20px;
+    gap: 30px;
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 767px) {
+      grid-template-columns: 1fr;
+    }
   }
 }

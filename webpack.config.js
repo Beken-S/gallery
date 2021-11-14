@@ -3,8 +3,9 @@
 const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 
 let mode = "development";
 if (process.env.NODE_ENV === "production") mode = "production";
@@ -21,6 +22,8 @@ const filename = (ext, dir = "") => {
 };
 
 module.exports = {
+  mode: mode,
+
   context: path.resolve(__dirname, "src"),
   entry: {
     main: "./index.js",
@@ -30,22 +33,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
-  devtool: "source-map",
-  devServer: {
-    static: path.resolve(__dirname, "dist/assets"),
-    hot: true,
-    port: 3000,
-  },
-  optimization: {
-    splitChunks: {
-      chunks: "all",
-    },
-    minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
-  },
-  plugins: [
-    new MiniCssExtractPlugin({ filename: filename("css", "styles") }),
-    new HTMLWebpackPlugin({ template: "./index.html" }),
-  ],
+
   module: {
     rules: [
       { test: /\.html$/i, use: ["html-loader"] },
@@ -58,7 +46,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        test: /\.(jpe?g|png|gif|svg)$/i,
         type: "asset/resource",
         generator: {
           filename: "assets/images/[hash][ext][query]",
@@ -79,5 +67,45 @@ module.exports = {
         },
       },
     ],
+  },
+
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+    },
+    minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
+  },
+
+  plugins: [
+    new MiniCssExtractPlugin({ filename: filename("css", "styles") }),
+    new HTMLWebpackPlugin({ template: "./index.html" }),
+    new ImageMinimizerPlugin({
+      severityError: "warning",
+      minimizerOptions: {
+        plugins: [
+          ["gifsicle", { optimizationLevel: 3, interlaced: true }],
+          ["imagemin-mozjpeg", { quality: 50 }],
+          ["pngquant", { quality: [0.7, 0.8] }],
+          [
+            "svgo",
+            {
+              name: "preset-default",
+              params: {
+                overrides: {
+                  removeViewBox: false,
+                },
+              },
+            },
+          ],
+        ],
+      },
+    }),
+  ],
+
+  devtool: "source-map",
+  devServer: {
+    static: path.resolve(__dirname, "dist"),
+    hot: true,
+    port: 3000,
   },
 };
