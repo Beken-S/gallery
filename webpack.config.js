@@ -84,7 +84,7 @@ module.exports = {
       minimizerOptions: {
         plugins: [
           ["gifsicle", { optimizationLevel: 3, interlaced: true }],
-          ["imagemin-mozjpeg", { quality: 50 }],
+          ["mozjpeg", { quality: 50 }],
           ["pngquant", { quality: [0.7, 0.8] }],
           [
             "svgo",
